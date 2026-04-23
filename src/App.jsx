@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Navigate } from "react-router-dom";
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./App.css";
@@ -22,116 +23,285 @@ import ReturnsTable from "./Pages/Sales/returnsTable";
 import WaitlistTable from "./Pages/Sales/waitlistTable";
 
 //import child components
-import Addemployee from "./Pages/Employee/addemployee";  //Employee main route
+import Addemployee from "./Pages/Employee/addemployee"; //Employee main route
 import Employeedatabase from "./Pages/Employee/employeedatabase";
 import Employeemanagement from "./Pages/Employee/employeemanagement";
 import Manageinventory from "./Pages/Inventory/manageinventory";
 import Productdatabase from "./Pages/Inventory/productdatabase";
 import Createpo from "./Pages/Procurement/createpo";
-import Suppilerdatabase from "./Pages/Procurement/supplierdatabase";  //procument main route
+import Suppilerdatabase from "./Pages/Procurement/supplierdatabase"; //procument main route
 import Suppilertransactions from "./Pages/Procurement/suppliertransactions";
-import Createinvoice from "./Pages/Sales/createinvoice";  //sales main route
+import Createinvoice from "./Pages/Sales/createinvoice"; //sales main route
 import Customerdatabase from "./Pages/Sales/customerdatabase";
 import Customerwaitlist from "./Pages/Sales/customerwaitlist";
 import Invoicemanagement from "./Pages/Sales/invoicemanagement";
 import Customerreturns from "./Pages/Sales/customerreturns";
-
 
 function App() {
   const [count, setCount] = useState(0);
 
   return (
     <Router>
-      
-      <Route path="/login" element={<Login />} />
+      <Routes>
+        <Route path="/login" element={<Login />} />
 
-      <div className="flex min-h-screen">
-        <Sidebar />
+        {/* Main routes */}
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Dashboard />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/inventory"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Inventory />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/procurement/suppilerdatabase"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Suppilerdatabase />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/sales/createinvoice"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Createinvoice />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/employee/addemployee"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Addemployee />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
 
-        <div className="flex-1 overflow-auto p-4 bg-gray-100">
-          <Navbar />
-          <div className="p-6">
-            <Routes>
-              {/* Main routes */}
-              <Route path="/" element={<Dashboard />} />
-              <Route
-                path="/inventory"
-                element={
-                  <ProtectedRoute>
-                    <Inventory />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/procurement/suppilerdatabase"
-                element={<Suppilerdatabase />}
-              />
-              <Route path="/sales/createinvoice" element={<Createinvoice />} />
-              <Route path="/employee/addemployee" element={<Addemployee />} />
+        {/* next pages */}
+        <Route
+          path="/matchproducts"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Matchproducts />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/matchsupplier"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Matchsupplier />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/pdatabase"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Pdatabase />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/sdatabase"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Sdatabase />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/generatepdf"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Generatepdf />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/sales/SalesGenerate"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <SalesGenerate />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/employeeinfo"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Employeeinfo />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/returnstable"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <ReturnsTable />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/waitlisttable"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <WaitlistTable />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
 
-              {/* next pages */}
-              <Route path="/matchproducts" element={<Matchproducts />} />
-              <Route path="/matchsupplier" element={<Matchsupplier />} />
-              <Route path="/pdatabase" element={<Pdatabase />} />
-              <Route path="/sdatabase" element={<Sdatabase />} />
-              <Route path="/generatepdf" element={<Generatepdf />} />
-              <Route path="/sales/SalesGenerate" element={<SalesGenerate />} />
-              <Route path="/employeeinfo" element={<Employeeinfo />} />
-              <Route path="/returnstable" element={<ReturnsTable />} />
-              <Route path="/waitlisttable" element={<WaitlistTable />} />
+        {/* inventory child routes */}
+        <Route
+          path="/inventory/productdatabase"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Productdatabase />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/inventory/manageinventory"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Manageinventory />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
 
-              {/* inventory child routes */}
-              <Route
-                path="/inventory/productdatabase"
-                element={<Productdatabase />}
-              />
-              <Route
-                path="/inventory/manageinventory"
-                element={<Manageinventory />}
-              />
+        {/* Procurement child routes */}
+        <Route
+          path="/procurement/createpo"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Createpo />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/procurement/suppliertransactions"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Suppilertransactions />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
 
-              {/* Procurement child routes */}
-              <Route path="/procurement/createpo" element={<Createpo />} />
-              <Route
-                path="procurement/suppliertransactions"
-                element={<Suppilertransactions />}
-              />
+        {/* Sales child routes */}
+        <Route
+          path="/sales/customerdatabase"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Customerdatabase />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/sales/customerwaitlist"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Customerwaitlist />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/sales/invoicemanagement"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Invoicemanagement />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/sales/customerreturns"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Customerreturns />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
 
-              {/* Sales child routes */}
-              <Route
-                path="/sales/customerdatabase"
-                element={<Customerdatabase />}
-              />
-              <Route
-                path="/sales/customerwaitlist"
-                element={<Customerwaitlist />}
-              />
-              <Route
-                path="/sales/invoicemanagement"
-                element={<Invoicemanagement />}
-              />
-              <Route
-                path="/sales/customerreturns"
-                element={<Customerreturns />}
-              />
+        {/* Employee child routes */}
+        <Route
+          path="/employee/employeedatabase"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Employeedatabase />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/employee/employeemanagement"
+          element={
+            <ProtectedRoute>
+              <Layout>
+                <Employeemanagement />
+              </Layout>
+            </ProtectedRoute>
+          }
+        />
 
-              {/* Employee child routes */}
-              <Route
-                path="/employee/employeedatabase"
-                element={<Employeedatabase />}
-              />
-              <Route
-                path="/employee/employeemanagement"
-                element={<Employeemanagement />}
-              />
-
-              {/* Additional pages */}
-              <Route path="/privacy" element={<div>Privacy Policy</div>} />
-              <Route path="/terms" element={<div>Terms of Service</div>} />
-            </Routes>
-          </div>
-        </div>
-      </div>
+        {/* Additional pages */}
+        <Route path="/privacy" element={<div>Privacy Policy</div>} />
+        <Route path="/terms" element={<div>Terms of Service</div>} />
+      </Routes>
     </Router>
   );
 }

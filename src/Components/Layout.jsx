@@ -1,13 +1,15 @@
 import React from "react";
 import Navbar from "./Navbar";
-import Dashboard from "./Dashboard";
+import Sidebar from "./Sidebar";
 
-const Layout = () => {
+const Layout = ({ children }) => {
   return (
-    <div className="border-none shadow-2xl m-4 min-h-screen p-3 w-full rounded-2xl ">
-      <div>
+    <div className="flex min-h-screen">
+      <Sidebar />
+
+      <div className="flex-1">
         <Navbar />
-        <Dashboard />
+        <div className="p-4">{children}</div>
       </div>
     </div>
   );
