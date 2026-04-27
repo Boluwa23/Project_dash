@@ -1,15 +1,17 @@
 import React from 'react'
 import { ChevronRight } from "lucide-react";
-import { useState } from "react";
 import { MoreVertical } from "lucide-react";
 import { UserRound } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import { Download } from "lucide-react";
 
 
 const employeemanagement = () => {
-
   const [search, setSearch] = useState("");
+  const [employees, setEmployees] = useState([]);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   const handleNext = () => {
@@ -23,84 +25,37 @@ const employeemanagement = () => {
     Associate: "text-yellow-600",
   };
 
-  const employees = [
-    {
-      id: "EMP001",
-      name: "Ajayi Fisayo",
-      role: "Owner",
-      email: "Ajayi@gmail.com",
-      contact: "08189625641",
-      lastLogin: "10 Oct, 2025",
-    },
-    {
-      id: "EMP002",
-      name: "Bolu August",
-      role: "Manager",
-      email: "Ajayi@gmail.com",
-      contact: "08189625641",
-      lastLogin: "10 Oct, 2025",
-    },
-    {
-      id: "EMP003",
-      name: "Akin Black",
-      role: "Associate",
-      email: "Ajayi@gmail.com",
-      contact: "08189625641",
-      lastLogin: "10 Oct, 2025",
-    },
-    {
-      id: "EMP004",
-      name: "Tamilore Olotu",
-      role: "Analyst",
-      email: "Ajayi@gmail.com",
-      contact: "08189625641",
-      lastLogin: "10 Oct, 2025",
-    },
-    {
-      id: "EMP005",
-      name: "Tamilore Olotu",
-      role: "Analyst",
-      email: "Ajayi@gmail.com",
-      contact: "08189625641",
-      lastLogin: "10 Oct, 2025",
-    },
-    {
-      id: "EMP006",
-      name: "Tamilore Olotu",
-      role: "Analyst",
-      email: "Ajayi@gmail.com",
-      contact: "08189625641",
-      lastLogin: "10 Oct, 2025",
-    },
-    {
-      id: "EMP007",
-      name: "Tamilore Olotu",
-      role: "Analyst",
-      email: "Ajayi@gmail.com",
-      contact: "08189625641",
-      lastLogin: "10 Oct, 2025",
-    },
-    {
-      id: "EMP008",
-      name: "Tamilore Olotu",
-      role: "Analyst",
-      email: "Ajayi@gmail.com",
-      contact: "08189625641",
-      lastLogin: "10 Oct, 2025",
-    },
-    {
-      id: "EMP009",
-      name: "Tamilore Olotu",
-      role: "Analyst",
-      email: "Ajayi@gmail.com",
-      contact: "08189625641",
-      lastLogin: "10 Oct, 2025",
-    },
-  ];
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      try {
+        const token = localStorage.getItem("token");
 
-  const filtered = employees.filter((emp) =>
-    emp.name.toLowerCase().includes(search.toLowerCase())
-  );
+        const res = await axios.get(
+          "https://project-genesis-dashboard.onrender.com/api/auth/users",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+
+        setEmployees(res.data);
+      } catch (error) {
+        console.error(error);
+        alert("Failed to fetch employees");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEmployees();
+  }, []);
+
+const filtered = employees.filter((emp) =>
+  `${emp.firstName} ${emp.lastName}`
+    .toLowerCase()
+    .includes(search.toLowerCase()),
+);
 
   return (
     <div>
@@ -142,7 +97,7 @@ const employeemanagement = () => {
       <div className="grid mt-6 grid-cols-3 gap-5">
         {filtered.map((employee) => (
           <div
-            key={employee.id}
+            key={employee.employeeId}
             className="bg-white shadow rounded-xl border border-white p-5 relative"
           >
             {/* Status */}
@@ -163,7 +118,9 @@ const employeemanagement = () => {
             </div>
 
             {/* Name */}
-            <h2 className="text-center font-bold text-2xl">{employee.name}</h2>
+            <h2 className="text-center font-bold text-2xl">
+              {employee.firstName} {employee.lastName}
+            </h2>
             <p
               className={`text-center text-sm font-semibold text-blue-600 mb-3 ${
                 roleColors[employee.role]

@@ -1,188 +1,37 @@
 import React from 'react'
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 const employeedatabase = () => {
+  const [employees, setEmployees] = useState([]);
+  const [loading, setLoading] = useState(true);
+ 
+  useEffect(() => {
+    const fetchEmployees = async () => {
+      try {
+        const token = localStorage.getItem("token");
 
-  const employee = [
-    {
-      id: "01",
-      name: "Learn Africa PLC",
-      role: "Owner",
-      email: "info@learnafrica.com",
-      phone: "+2340755444",
-      address: "No 5, Oba-Adesida lane, Akure",
-      city: "Akure",
-      state: "Ondo",
-      country: "Nigeria",
-      contact: "Mr.Akinwale Ojo",
-      eaddress: "23 Oke Oda Street",
-      access: "Super User",
-      accesstype: "all",
-    },
-    {
-      id: "02",
-      name: "Learn Africa PLC",
-      role: "Owner",
-      email: "info@learnafrica.com",
-      phone: "+2340755444",
-      address: "No 5, Oba-Adesida lane, Akure",
-      city: "Akure",
-      state: "Ondo",
-      country: "Nigeria",
-      contact: "Mr.Akinwale Ojo",
-      eaddress: "23 Oke Oda Street",
-      access: "Super User",
-      accesstype: "all",
-    },
-    {
-      id: "03",
-      name: "Learn Africa PLC",
-      role: "Owner",
-      email: "info@learnafrica.com",
-      phone: "+2340755444",
-      address: "No 5, Oba-Adesida lane, Akure",
-      city: "Akure",
-      state: "Ondo",
-      country: "Nigeria",
-      contact: "Mr.Akinwale Ojo",
-      eaddress: "23 Oke Oda Street",
-      access: "Super User",
-      accesstype: "all",
-    },
-    {
-      id: "04",
-      name: "Learn Africa PLC",
-      role: "Owner",
-      email: "info@learnafrica.com",
-      phone: "+2340755444",
-      address: "No 5, Oba-Adesida lane, Akure",
-      city: "Akure",
-      state: "Ondo",
-      country: "Nigeria",
-      contact: "Mr.Akinwale Ojo",
-      eaddress: "23 Oke Oda Street",
-      access: "Super User",
-      accesstype: "all",
-    },
-    {
-      id: "05",
-      name: "Learn Africa PLC",
-      role: "Owner",
-      email: "info@learnafrica.com",
-      phone: "+2340755444",
-      address: "No 5, Oba-Adesida lane, Akure",
-      city: "Akure",
-      state: "Ondo",
-      country: "Nigeria",
-      contact: "Mr.Akinwale Ojo",
-      eaddress: "23 Oke Oda Street",
-      access: "Super User",
-      accesstype: "all",
-    },
-    {
-      id: "06",
-      name: "Learn Africa PLC",
-      role: "Owner",
-      email: "info@learnafrica.com",
-      phone: "+2340755444",
-      address: "No 5, Oba-Adesida lane, Akure",
-      city: "Akure",
-      state: "Ondo",
-      country: "Nigeria",
-      contact: "Mr.Akinwale Ojo",
-      eaddress: "23 Oke Oda Street",
-      access: "Super User",
-      accesstype: "all",
-    },
-    {
-      id: "07",
-      name: "Learn Africa PLC",
-      role: "Owner",
-      email: "info@learnafrica.com",
-      phone: "+2340755444",
-      address: "No 5, Oba-Adesida lane, Akure",
-      city: "Akure",
-      state: "Ondo",
-      country: "Nigeria",
-      contact: "Mr.Akinwale Ojo",
-      eaddress: "23 Oke Oda Street",
-      access: "Super User",
-      accesstype: "all",
-    },
-    {
-      id: "08",
-      name: "Learn Africa PLC",
-      role: "Owner",
-      email: "info@learnafrica.com",
-      phone: "+2340755444",
-      address: "No 5, Oba-Adesida lane, Akure",
-      city: "Akure",
-      state: "Ondo",
-      country: "Nigeria",
-      contact: "Mr.Akinwale Ojo",
-      eaddress: "23 Oke Oda Street",
-      access: "Super User",
-      accesstype: "all",
-    },
-    {
-      id: "09",
-      name: "Learn Africa PLC",
-      role: "Owner",
-      email: "info@learnafrica.com",
-      phone: "+2340755444",
-      address: "No 5, Oba-Adesida lane, Akure",
-      city: "Akure",
-      state: "Ondo",
-      country: "Nigeria",
-      contact: "Mr.Akinwale Ojo",
-      eaddress: "23 Oke Oda Street",
-      access: "Super User",
-      accesstype: "all",
-    },
-    {
-      id: "10",
-      name: "Learn Africa PLC",
-      role: "Owner",
-      email: "info@learnafrica.com",
-      phone: "+2340755444",
-      address: "No 5, Oba-Adesida lane, Akure",
-      city: "Akure",
-      state: "Ondo",
-      country: "Nigeria",
-      contact: "Mr.Akinwale Ojo",
-      eaddress: "23 Oke Oda Street",
-      access: "Super User",
-      accesstype: "all",
-    },
-    {
-      id: "11",
-      name: "Learn Africa PLC",
-      role: "Owner",
-      email: "info@learnafrica.com",
-      phone: "+2340755444",
-      address: "No 5, Oba-Adesida lane, Akure",
-      city: "Akure",
-      state: "Ondo",
-      country: "Nigeria",
-      contact: "Mr.Akinwale Ojo",
-      eaddress: "23 Oke Oda Street",
-      access: "Super User",
-      accesstype: "all",
-    },
-    {
-      id: "12",
-      name: "Learn Africa PLC",
-      role: "Owner",
-      email: "info@learnafrica.com",
-      phone: "+2340755444",
-      address: "No 5, Oba-Adesida lane, Akure",
-      city: "Akure",
-      state: "Ondo",
-      contact: "Mr.Akinwale Ojo",
-      eaddress: "23 Oke Oda Street",
-      access: "Super User",
-      accesstype: "all",
-    },
-  ];
+        const res = await axios.get(
+          "https://project-genesis-dashboard.onrender.com/api/auth/users",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+
+        setEmployees(res.data);
+      } catch (error) {
+        console.error(error);
+        alert("Failed to fetch employees");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchEmployees();
+  }, []);
+  
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -201,6 +50,9 @@ const employeedatabase = () => {
               </th>
               <th className="text-xs text-white border p-2 border-gray-300  font-normal text-nowrapp">
                 FULL NAME
+              </th>
+              <th className=" text-xs text-white border p-2 border-gray-300  font-normal text-nowrap">
+                USERNAME
               </th>
               <th className=" text-xs text-white border p-2 border-gray-300  font-normal text-nowrap">
                 ROLE
@@ -230,55 +82,53 @@ const employeedatabase = () => {
                 EMERGENCY ADDRESS
               </th>
               <th className=" text-xs text-white border p-2 border-gray-300  font-normal text-nowrap">
-                ACCESS
-              </th>
-              <th className=" text-xs text-white border p-2 border-gray-300  font-normal text-nowrap">
                 ACCESS TYPE
               </th>
             </tr>
           </thead>
 
           <tbody className="bg-white   divide-gray-200">
-            {employee.map((employer) => (
+            {employees.map((emp) => (
               <tr>
                 <td className="px-6 py-4 border border-gray-200 text-sm text-gray-900 text-center">
-                  {employer.id}
+                  {emp.employeeId}
                 </td>
                 <td className="px-6 py-4 border border-gray-200 text-sm text-gray-900 text-center text-nowrap">
-                  {employer.name}
+                  {emp.firstName} {emp.lastName}
                 </td>
                 <td className="px-6 py-4 border border-gray-200 text-sm text-gray-900 text-center text-nowrap">
-                  {employer.role}
+                  {emp.username}
                 </td>
                 <td className="px-6 py-4 border border-gray-200 text-sm text-gray-900 text-center text-nowrap">
-                  {employer.email}
+                  {emp.role}
                 </td>
                 <td className="px-6 py-4 border border-gray-200 text-sm text-gray-900 text-center text-nowrap">
-                  {employer.phone}
+                  {emp.email}
                 </td>
                 <td className="px-6 py-4 border border-gray-200 text-sm text-gray-900 text-center text-nowrap">
-                  {employer.address}
+                  {emp.phone}
                 </td>
                 <td className="px-6 py-4 border border-gray-200 text-sm text-gray-900 text-center text-nowrap">
-                  {employer.city}
+                  {emp.address}
                 </td>
                 <td className="px-6 py-4 border border-gray-200 text-sm text-gray-900 text-center text-nowrap">
-                  {employer.state}
+                  {emp.city}
                 </td>
                 <td className="px-6 py-4 border border-gray-200 text-sm text-gray-900 text-center text-nowrap">
-                  {employer.country}
+                  {emp.state}
                 </td>
                 <td className="px-6 py-4 border border-gray-200 text-sm text-gray-900 text-center text-nowrap">
-                  {employer.contact}
+                  {emp.country}
                 </td>
                 <td className="px-6 py-4 border border-gray-200 text-sm text-gray-900 text-center text-nowrap">
-                  {employer.eaddress}
+                  {emp.emergencyContactPhone}
                 </td>
                 <td className="px-6 py-4 border border-gray-200 text-sm text-gray-900 text-center text-nowrap">
-                  {employer.access}
+                  {emp.emergencyAddress}
                 </td>
+
                 <td className="px-6 py-4 border border-gray-200 text-sm text-gray-900 text-center text-nowrap">
-                  {employer.access}
+                  {emp.accessType}
                 </td>
               </tr>
             ))}
