@@ -165,7 +165,7 @@ export default function Sidebar() {
                     <div
                       className={`flex items-center justify-between p-2 rounded cursor-pointer transition-colors ${
                         isRouteActive(item.route, item.children)
-                          ? "bg-blue-300 text-blue-700"
+                          ? "bg-blue-300 text-blue-700 "
                           : "hover:bg-blue-200 hover:text-blue-600"
                       }`}
                       onClick={() => toggleDropdown(item.dropdownKey)}
@@ -188,7 +188,7 @@ export default function Sidebar() {
                       {item.children.map((child) => (
                         <Link to={child.route} key={child.route}>
                           <div
-                            className={`flex items-center gap-2 p-2 rounded cursor-pointer transition-colors ${
+                            className={`flex whitespace-nowrap items-center gap-2 p-2 rounded cursor-pointer transition-colors ${
                               isChildActive(child.route)
                                 ? "bg-blue-200 text-blue-600 font-medium"
                                 : "hover:bg-blue-100 hover:text-blue-500"

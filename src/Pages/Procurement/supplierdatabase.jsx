@@ -1,14 +1,18 @@
 import React from 'react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+    import * as XLSX from "xlsx";
 import { FolderUp, FileInput, Download } from "lucide-react";
 
 const supplierdatabase = () => {
    const navigate = useNavigate();
 
    const handleNext = () => {
-     navigate("/matchsupplier"); // this goes to your new page
-   };
+     navigate("/matchsupplier"); // this goes to your new page 
+  };
+    const lastNext = () => {
+      navigate("/sdatabase");
+    };
 
     const [file, setFile] = useState(null);
  
@@ -16,14 +20,35 @@ const supplierdatabase = () => {
       setFile(e.target.files[0]);
     };
 
+
+
     const handleUpload = (e) => {
       e.preventDefault();
-      if (file) {
-        alert(`File "${file.name}" uploaded successfully!`);
-        //  replace this with your backend upload logic
-      } else {
-        alert("Please choose a file first!");
+
+      if (!file) {
+        alert("Choose a file first");
+        return;
       }
+
+      const reader = new FileReader();
+
+      reader.onload = (evt) => {
+        const data = evt.target.result;
+        const workbook = XLSX.read(data, { type: "binary" });
+
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
+
+        const jsonData = XLSX.utils.sheet_to_json(sheet);
+
+        // store preview
+        localStorage.setItem("supplierPreview", JSON.stringify(jsonData));
+
+        // move to next page
+        navigate("/matchsupplier");
+      };
+
+      reader.readAsBinaryString(file);
     };
     return (
       <div>
@@ -85,18 +110,29 @@ const supplierdatabase = () => {
             You can download this sample data set as a starting point for your
             own file
           </p>
-          <button className="flex mt-6 px-5 py-2 border border-gray-300 text-white rounded-md bg-blue-500 font-semibold ">
+          <button
+            onClick={() => {
+              window.open("/sample-suppliers.xlsx", "_blank");
+            }}
+            className="flex mt-6 px-5 py-2 border border-gray-300 text-white rounded-md bg-blue-500 font-semibold"
+          >
             <Download />
             Download
           </button>
         </div>
 
         <div className="flex justify-end space-x-3 mt-6">
+          <button
+            onClick={lastNext}
+            className="px-5 py-2 border border-gray-300 text-white rounded-md bg-blue-500 font-semibold cursor-pointer"
+          >
+            View Suppiler Data
+          </button>
           <button className="px-5 py-2 border border-gray-300 text-blue-500 rounded-md bg-white font-semibold ">
             Cancel
           </button>
           <button
-            onClick={handleNext}
+            onClick={handleUpload}
             className="px-5 py-2 border border-gray-300 text-white rounded-md bg-blue-500 font-semibold "
           >
             Next Step

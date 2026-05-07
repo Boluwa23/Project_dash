@@ -10,7 +10,9 @@ const navigate = useNavigate();
 const handleNext = () => {
   navigate("/matchproducts"); // this goes to your new page
 };
-
+  const lastNext = () => {
+  navigate("/pdatabase")
+}
 const [file, setFile] = useState(null);
 
 const handleFileChange = (e) => {
@@ -94,6 +96,12 @@ const handleUpload = (e) => {
       </div>
 
       <div className="flex justify-end space-x-3 mt-6">
+        <button
+          onClick={lastNext}
+          className="px-5 py-2 border border-gray-300 text-white rounded-md bg-blue-500 font-semibold cursor-pointer"
+        >
+          View Product Data
+        </button>
         <button className="px-5 py-2 border border-gray-300 text-blue-500 rounded-md bg-white font-semibold ">
           Cancel
         </button>

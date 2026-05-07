@@ -3,6 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 
 function Login() {
+  console.log("Login button clicked");
   const navigate = useNavigate();
 
   const [identifier, setIdentifier] = useState(""); // email or username
@@ -12,11 +13,12 @@ function Login() {
   const handleLogin = async () => {
     if (!identifier || !password) {
       alert("Enter username/email and password");
-      return;
+      return;``
     }
 
     try {
       setLoading(true);
+      console.log("Response:", res.data);
 
       const res = await axios.post(
         "https://project-genesis-dashboard.onrender.com/api/auth/login", // 👈 replace this
@@ -32,7 +34,7 @@ function Login() {
       localStorage.setItem("user", JSON.stringify(res.data.user));
 
       // ✅ Go to dashboard
-      navigate("/dashboard");
+      navigate("/");
     } catch (error) {
       console.log(error);
 
