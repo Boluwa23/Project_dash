@@ -13,7 +13,7 @@ function Login() {
   const handleLogin = async () => {
     if (!identifier || !password) {
       alert("Enter username/email and password");
-      return;``
+      return;
     }
 
     try {
