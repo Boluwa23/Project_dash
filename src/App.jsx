@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import { Navigate } from "react-router-dom";
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
@@ -38,7 +38,7 @@ import Invoicemanagement from "./Pages/Sales/invoicemanagement";
 import Customerreturns from "./Pages/Sales/customerreturns";
 
 function App() {
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
 
   return (
     <Router>
