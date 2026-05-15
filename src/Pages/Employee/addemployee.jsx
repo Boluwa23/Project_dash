@@ -329,6 +329,7 @@ const handleSubmit = async (e) => {
                 placeholder="Select access type"
                 className="w-full border border-gray-300 rounded-lg p-3 mt-2 focus:border-gray-300 focus:outline-none "
               >
+                <option value="superUser">Super User(All)</option>
                 <option value="Level1">
                   Level 1(Procurement, Inventory Managment)
                 </option>
@@ -336,7 +337,7 @@ const handleSubmit = async (e) => {
                   Level 2(Inventry Managment & Reciept/Invoicing Tool)
                 </option>
                 <option value="Level3">
-                  Level 3 (Database Attributes, Inventory & Procurement
+                  Level 3(Database Attributes, Inventory & Procurement
                   Management. )
                 </option>
               </select>
