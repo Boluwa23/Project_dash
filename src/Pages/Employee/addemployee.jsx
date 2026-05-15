@@ -168,7 +168,7 @@ const handleSubmit = async (e) => {
                 <option value="Manager">Manager</option>
                 <option value="Associate">Associate</option>
                 <option value="Analyst">Analyst</option>
-                <option value="Left">Left</option>
+                <option value="Left">Left/Not an Employee</option>
               </select>
             </div>
 
@@ -329,9 +329,17 @@ const handleSubmit = async (e) => {
                 placeholder="Select access type"
                 className="w-full border border-gray-300 rounded-lg p-3 mt-2 focus:border-gray-300 focus:outline-none "
               >
-                <option value="Level1">Level1</option>
-                <option value="Level2">Level2</option>
-                <option value="Level3">Level3</option>
+                <option value="superUser">Super User(All)</option>
+                <option value="Level1">
+                  Level 1(Procurement, Inventory Managment)
+                </option>
+                <option value="Level2">
+                  Level 2(Inventry Managment & Reciept/Invoicing Tool)
+                </option>
+                <option value="Level3">
+                  Level 3(Database Attributes, Inventory & Procurement
+                  Management. )
+                </option>
               </select>
             </div>
           </div>
