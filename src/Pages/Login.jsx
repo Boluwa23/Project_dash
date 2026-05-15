@@ -10,39 +10,37 @@ function Login() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleLogin = async () => {
-    if (!identifier || !password) {
-      alert("Enter username/email and password");
-      return;``
-    }
+const handleLogin = async () => {
+  if (!identifier || !password) {
+    alert("Enter username/email and password");
+    return;
+  }
 
-    try {
-      setLoading(true);
-      console.log("Response:", res.data);
+  try {
+    setLoading(true);
 
-      const res = await axios.post(
-        "https://project-genesis-dashboard.onrender.com/api/auth/login", // 👈 replace this
-        {
-          identifier,
-          password,
-        },
-      );
+    const res = await axios.post(
+      "https://project-genesis-dashboard.onrender.com/api/auth/login",
+      {
+        identifier,
+        password,
+      },
+    );
 
-      // ✅ Save token + auth
-      localStorage.setItem("auth", "true");
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user", JSON.stringify(res.data.user));
+    console.log("Response:", res.data); // ✅ Moved AFTER res is declared
 
-      // ✅ Go to dashboard
-      navigate("/");
-    } catch (error) {
-      console.log(error);
+    localStorage.setItem("auth", "true");
+    localStorage.setItem("token", res.data.token);
+    localStorage.setItem("user", JSON.stringify(res.data.user));
 
-      alert(error.response?.data?.message || "Login failed");
-    } finally {
-      setLoading(false);
-    }
-  };
+    navigate("/dashboard");
+  } catch (error) {
+    console.log(error);
+    alert(error.response?.data?.message || "Login failed");
+  } finally {
+    setLoading(false);
+  }
+};
 
   return (
     <div className="text-center mt-60 border rounded-lg p-10 w-125 h-85 mx-auto bg-gray-100">
