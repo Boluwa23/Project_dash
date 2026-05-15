@@ -65,7 +65,10 @@ const handleSubmit = async (e) => {
         <p className="font-medium text-black">ADD/ASSIGN EMPLOYEE</p>
       </h1>
 
-      <form onSubmit={handleSubmit} className="bg-white rounded-lg p-10 w-full mt-4 shadow-sm">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white rounded-lg p-10 w-full mt-4 shadow-sm"
+      >
         <div className="flex items-start mt-5 justify-between gap-30">
           <div className="W-1/2">
             {/* Employee First Name */}
@@ -153,16 +156,22 @@ const handleSubmit = async (e) => {
               <label className="text-black text-[20px] font-medium text-nowrap">
                 Role <span className="text-red-700">*</span>
               </label>
-              <input
-                type="text"
+              <select
                 name="role"
                 value={formData.role}
                 onChange={handleChange}
                 required
-                placeholder="Role"
+                placeholder="role"
                 className="w-full border border-gray-300 rounded-lg p-3 mt-2 focus:border-gray-300 focus:outline-none "
-              />
+              >
+                <option value="owner">Owner</option>
+                <option value="Manager">Manager</option>
+                <option value="Associate">Associate</option>
+                <option value="Analyst">Analyst</option>
+                <option value="Left">Left</option>
+              </select>
             </div>
+
             {/* Employee Id
             <div className="mb-5">
               <label className="text-black text-[20px] font-medium text-nowrap">
@@ -330,7 +339,7 @@ const handleSubmit = async (e) => {
 
         <div className="flex justify-end mt-7">
           <button
-            type='submit'
+            type="submit"
             className="bg-blue-600 text-white px-4 py-2 border border-blue-600 rounded-lg font-medium"
           >
             Continue
