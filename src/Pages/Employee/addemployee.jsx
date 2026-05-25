@@ -164,11 +164,11 @@ const handleSubmit = async (e) => {
                 placeholder="role"
                 className="w-full border border-gray-300 rounded-lg p-3 mt-2 focus:border-gray-300 focus:outline-none "
               >
-                <option value="owner">Owner</option>
+                <option value="Owner">Owner</option>
                 <option value="Manager">Manager</option>
                 <option value="Associate">Associate</option>
                 <option value="Analyst">Analyst</option>
-                <option value="Left">Left/Not an Employee</option>
+                <option value="Not an employee">Left/Not an Employee</option>
               </select>
             </div>
 
