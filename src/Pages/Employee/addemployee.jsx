@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { ChevronRight } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -24,33 +24,33 @@ const addemployee = () => {
   });
   const navigate = useNavigate();
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  try {
-    const token = localStorage.getItem("token");
+    try {
+      const token = localStorage.getItem("token");
 
-    const res = await axios.post(
-      "https://project-genesis-dashboard.onrender.com/api/auth/create-user", // 👈 your route
-      formData,
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const res = await axios.post(
+        "https://project-genesis-dashboard.onrender.com/api/auth/create-user", // 👈 your route
+        formData,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      },
-    );
+      );
 
-    console.log(res.data);
+      console.log(res.data);
 
-    alert("User created successfully");
+      alert("User created successfully");
 
-    navigate("/employee/employeemanagement");
-  } catch (error) {
-    console.error(error);
+      navigate("/employee/employeemanagement");
+    } catch (error) {
+      console.error(error);
 
-    alert(error.response?.data?.message || "Error creating user");
-  }
-};
+      alert(error.response?.data?.message || "Error creating user");
+    }
+  };
   const handleChange = (e) => {
     setFormData({
       ...formData,
@@ -152,7 +152,7 @@ const handleSubmit = async (e) => {
             </div>
 
             {/* Role */}
-            <div className="mb-5">
+            {/* <div className="mb-5">
               <label className="text-black text-[20px] font-medium text-nowrap">
                 Role <span className="text-red-700">*</span>
               </label>
@@ -170,7 +170,7 @@ const handleSubmit = async (e) => {
                 <option value="Analyst">Analyst</option>
                 <option value="Not an employee">Left/Not an Employee</option>
               </select>
-            </div>
+            </div> */}
 
             {/* Employee Id
             <div className="mb-5">
@@ -356,6 +356,6 @@ const handleSubmit = async (e) => {
       </form>
     </div>
   );
-}
+};
 
-export default addemployee
+export default addemployee;
