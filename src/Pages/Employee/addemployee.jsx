@@ -152,7 +152,7 @@ const addemployee = () => {
             </div>
 
             {/* Role */}
-            {/* <div className="mb-5">
+            <div className="mb-5">
               <label className="text-black text-[20px] font-medium text-nowrap">
                 Role <span className="text-red-700">*</span>
               </label>
@@ -170,7 +170,7 @@ const addemployee = () => {
                 <option value="Analyst">Analyst</option>
                 <option value="Not an employee">Left/Not an Employee</option>
               </select>
-            </div> */}
+            </div>
 
             {/* Employee Id
             <div className="mb-5">
