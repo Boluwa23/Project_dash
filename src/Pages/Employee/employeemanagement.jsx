@@ -14,9 +14,9 @@ const employeemanagement = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
-  const handleNext = () => {
-    navigate("/employeeinfo"); // this goes to your new page
-  };
+const handleNext = (employee) => {
+  navigate("/employeeinfo", { state: { employee } });
+};
 
   const roleColors = {
     Owner: "text-green-600",
@@ -107,7 +107,7 @@ const filtered = employees.filter((emp) =>
               </span>
               <MoreVertical
                 size={18}
-                onClick={handleNext}
+                onClick={() => handleNext(employee)}
                 className="text-gray-500 cursor-pointer"
               />
             </div>
@@ -160,7 +160,7 @@ const filtered = employees.filter((emp) =>
               </span>
 
               <button
-                onClick={handleNext}
+                onClick={() => handleNext(employee)}
                 className="text-blue-600 text-nowrap hover:underline"
               >
                 View Employee
