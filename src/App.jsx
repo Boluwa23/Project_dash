@@ -14,7 +14,7 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 //import next pages
 import Matchproducts from "./Pages/matchproducts";
 import Matchsupplier from "./Pages/matchsupplier";
-import Pdatabase from "./Pages/pdatabase";
+import ProductDatabaseList from "./Pages/pdatabase";
 import Sdatabase from "./Pages/sdatabase";
 import Generatepdf from "./generatepdf";
 import SalesGenerate from "./Pages/Sales/SalesGenerate";
@@ -124,7 +124,7 @@ function App() {
           element={
             <ProtectedRoute>
               <Layout>
-                <Pdatabase />
+                <ProductDatabaseList />
               </Layout>
             </ProtectedRoute>
           }
