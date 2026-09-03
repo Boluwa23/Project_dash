@@ -443,80 +443,148 @@ const CreatePO = () => {
     );
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setError(null);
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     setError(null);
 
-    if (!selectedSupplierId) {
-      setError("Please select a supplier");
-      return;
-    }
-    const invalidItem = lineItems.find(
-      (item) => !item.productId || item.qty <= 0,
+//     if (!selectedSupplierId) {
+//       setError("Please select a supplier");
+//       return;
+//     }
+//     const invalidItem = lineItems.find(
+//       (item) => !item.productId || item.qty <= 0,
+//     );
+//     if (invalidItem) {
+//       setError(
+//         "Every product line needs a product selected and a quantity greater than 0",
+//       );
+//       return;
+//     }
+
+//     setSubmitting(true);
+//     try {
+//       const res = await fetch(PROCUREMENT_URL, {
+//         method: "POST",
+//         headers: { "Content-Type": "application/json" },
+//         body: JSON.stringify({
+//           transactionNumber,
+//           transactionType: "Goods Receipt",
+//           supplier: selectedSupplierId,
+//           dateReceived,
+//           items: lineItems.map((item) => ({
+//             product: item.productId,
+//             quantity: item.qty,
+//             cost: item.rate,
+//           })),
+//         }),
+//       });
+
+//       const data = await res.json();
+//       if (!res.ok) throw new Error(data.message || "Failed to create PO");
+
+// const data = await res.json();
+// if (!res.ok) throw new Error(data.message || "Failed to create PO");
+
+// const data = await res.json();
+// if (!res.ok) throw new Error(data.message || "Failed to create PO");
+
+// const poData = {
+//   transactionNumber,
+//   dateReceived,
+//   supplier: selectedSupplier,
+//   items: lineItems.map((item) => {
+//     const product = products.find((p) => p._id === item.productId);
+//     return {
+//       productFamily: product?.productFamily || "",
+//       productCategory: product?.productCategory || "",
+//       itemName: product?.itemName || "",
+//       qty: item.qty,
+//       rate: item.rate,
+//       total: item.total,
+//     };
+//   }),
+//   subtotal,
+//   discountPercent,
+//   discountAmount,
+//   grandTotal,
+// };
+
+// sessionStorage.setItem("poData", JSON.stringify(poData));
+// navigate("/generatepdf");
+//     } catch (err) {
+//       setError(err.message);
+//     } finally {
+//       setSubmitting(false);
+//     }
+//   };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError(null);
+
+  if (!selectedSupplierId) {
+    setError("Please select a supplier");
+    return;
+  }
+  const invalidItem = lineItems.find(
+    (item) => !item.productId || item.qty <= 0,
+  );
+  if (invalidItem) {
+    setError(
+      "Every product line needs a product selected and a quantity greater than 0",
     );
-    if (invalidItem) {
-      setError(
-        "Every product line needs a product selected and a quantity greater than 0",
-      );
-      return;
-    }
+    return;
+  }
 
-    setSubmitting(true);
-    try {
-      const res = await fetch(PROCUREMENT_URL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          transactionNumber,
-          transactionType: "Goods Receipt",
-          supplier: selectedSupplierId,
-          dateReceived,
-          items: lineItems.map((item) => ({
-            product: item.productId,
-            quantity: item.qty,
-            cost: item.rate,
-          })),
-        }),
-      });
+  setSubmitting(true);
+  try {
+    const res = await fetch(PROCUREMENT_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        transactionNumber,
+        transactionType: "Goods Receipt",
+        supplier: selectedSupplierId,
+        dateReceived,
+        items: lineItems.map((item) => ({
+          product: item.productId,
+          quantity: item.qty,
+          cost: item.rate,
+        })),
+      }),
+    });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to create PO");
+    const data = await res.json();
+    if (!res.ok) throw new Error(data.message || "Failed to create PO");
 
-const data = await res.json();
-if (!res.ok) throw new Error(data.message || "Failed to create PO");
-
-const data = await res.json();
-if (!res.ok) throw new Error(data.message || "Failed to create PO");
-
-const poData = {
-  transactionNumber,
-  dateReceived,
-  supplier: selectedSupplier,
-  items: lineItems.map((item) => {
-    const product = products.find((p) => p._id === item.productId);
-    return {
-      productFamily: product?.productFamily || "",
-      productCategory: product?.productCategory || "",
-      itemName: product?.itemName || "",
-      qty: item.qty,
-      rate: item.rate,
-      total: item.total,
+    const poData = {
+      transactionNumber,
+      dateReceived,
+      supplier: selectedSupplier,
+      items: lineItems.map((item) => {
+        const product = products.find((p) => p._id === item.productId);
+        return {
+          productFamily: product?.productFamily || "",
+          productCategory: product?.productCategory || "",
+          itemName: product?.itemName || "",
+          qty: item.qty,
+          rate: item.rate,
+          total: item.total,
+        };
+      }),
+      subtotal,
+      discountPercent,
+      discountAmount,
+      grandTotal,
     };
-  }),
-  subtotal,
-  discountPercent,
-  discountAmount,
-  grandTotal,
-};
 
-sessionStorage.setItem("poData", JSON.stringify(poData));
-navigate("/generatepdf");
-    } catch (err) {
-      setError(err.message);
-    } finally {
-      setSubmitting(false);
-    }
-  };
+    sessionStorage.setItem("poData", JSON.stringify(poData));
+    navigate("/generatepdf");
+  } catch (err) {
+    setError(err.message);
+  } finally {
+    setSubmitting(false);
+  }
+};
 
   if (loadingData) {
     return (
