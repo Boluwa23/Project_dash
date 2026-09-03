@@ -485,30 +485,32 @@ const CreatePO = () => {
 const data = await res.json();
 if (!res.ok) throw new Error(data.message || "Failed to create PO");
 
-navigate("/generatepdf", {
-  state: {
-    poData: {
-      transactionNumber,
-      dateReceived,
-      supplier: selectedSupplier,
-      items: lineItems.map((item) => {
-        const product = products.find((p) => p._id === item.productId);
-        return {
-          productFamily: product?.productFamily || "",
-          productCategory: product?.productCategory || "",
-          itemName: product?.itemName || "",
-          qty: item.qty,
-          rate: item.rate,
-          total: item.total,
-        };
-      }),
-      subtotal,
-      discountPercent,
-      discountAmount,
-      grandTotal,
-    },
-  },
-});
+const data = await res.json();
+if (!res.ok) throw new Error(data.message || "Failed to create PO");
+
+const poData = {
+  transactionNumber,
+  dateReceived,
+  supplier: selectedSupplier,
+  items: lineItems.map((item) => {
+    const product = products.find((p) => p._id === item.productId);
+    return {
+      productFamily: product?.productFamily || "",
+      productCategory: product?.productCategory || "",
+      itemName: product?.itemName || "",
+      qty: item.qty,
+      rate: item.rate,
+      total: item.total,
+    };
+  }),
+  subtotal,
+  discountPercent,
+  discountAmount,
+  grandTotal,
+};
+
+sessionStorage.setItem("poData", JSON.stringify(poData));
+navigate("/generatepdf");
     } catch (err) {
       setError(err.message);
     } finally {

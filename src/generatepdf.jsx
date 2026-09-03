@@ -202,16 +202,259 @@
 
 // export default generatepdf
 
-import React from "react";
+// import React from "react";
+// import { ChevronRight } from "lucide-react";
+// import { useLocation, useNavigate } from "react-router-dom";
+
+// const GeneratePDF = () => {
+//   const location = useLocation();
+//   const navigate = useNavigate();
+//   const poData = location.state?.poData;
+
+//   // If someone lands here directly (refresh, bookmark) with no PO data, bounce back
+//   if (!poData) {
+//     return (
+//       <div className="p-6 text-center">
+//         <p className="text-gray-500 mb-4">No purchase order data found.</p>
+//         <button
+//           onClick={() => navigate("/procurement/createpo")}
+//           className="px-4 py-2 bg-blue-600 text-white rounded-md font-semibold"
+//         >
+//           Back to Create PO
+//         </button>
+//       </div>
+//     );
+//   }
+
+//   const {
+//     transactionNumber,
+//     dateReceived,
+//     supplier,
+//     items,
+//     subtotal,
+//     discountPercent,
+//     discountAmount,
+//     grandTotal,
+//   } = poData;
+
+//   const handleSaveToDevice = () => {
+//     // Opens the browser print dialog — user can choose "Save as PDF" as the destination
+//     window.print();
+//   };
+
+//   const handleSendToSupplier = () => {
+//     if (!supplier?.email && !supplier?.contactEmail) {
+//       alert("This supplier has no email on file.");
+//       return;
+//     }
+//     const to = supplier.contactEmail || supplier.email;
+//     const subject = encodeURIComponent(`Purchase Order ${transactionNumber}`);
+//     const body = encodeURIComponent(
+//       `Hi ${supplier.contactPerson || supplier.name},\n\nPlease find our purchase order ${transactionNumber} details below:\n\n` +
+//         items
+//           .map(
+//             (it, i) =>
+//               `${i + 1}. ${it.itemName} — Qty: ${it.qty} — Rate: ₦${it.rate} — Total: ₦${it.total}`,
+//           )
+//           .join("\n") +
+//         `\n\nGrand Total: ₦${grandTotal.toLocaleString()}\n\nThanks,\nLearn Africa`,
+//     );
+//     window.location.href = `mailto:${to}?subject=${subject}&body=${body}`;
+//   };
+
+//   return (
+//     <div>
+//       <h1 className="text-gray-400 text-[30px] align pb-5 items-center flex">
+//         SUPPLIERS <ChevronRight className="mr-2 ml-3 text-gray-700" />
+//         CREATE NEW PO <ChevronRight className="mr-2 ml-3 text-gray-700" />
+//         <p className="font-medium text-black">GENERATE/SEND PDF</p>
+//       </h1>
+
+//       <div
+//         className="border w-full bg-white border-white p-6 rounded-lg shadow-md"
+//         id="po-printable"
+//       >
+//         <div className="flex justify-between items-center border-b pb-6 border-gray-300">
+//           <p className="font-medium text-[25px]">
+//             {supplier?.name || "Unknown Supplier"}
+//           </p>
+//           <p className="font-medium text-[18px]">
+//             TRANSACTION DATE <br />
+//             <span className="px-7 text-blue-700 font-semibold">
+//               {new Date(dateReceived).toLocaleDateString("en-GB")}
+//             </span>
+//           </p>
+//         </div>
+
+//         <div className="flex justify-between w-full py-6">
+//           <div className="flex flex-col">
+//             <span className="font-medium text-[18px] pb-2">Supplier ID:</span>
+//             <span className="font-medium text-[18px] pb-2">
+//               Contact Person:
+//             </span>
+//             <span className="font-medium text-[18px] pb-2">
+//               Contact Phone Number:
+//             </span>
+//             <span className="font-medium text-[18px] pb-2">Contact Email:</span>
+//             <span className="font-medium text-[18px] pb-2">
+//               Supplier Email:
+//             </span>
+//             <span className="font-medium text-[18px] pb-2">
+//               Transaction Number:
+//             </span>
+//           </div>
+//           <div className="flex flex-col text-right">
+//             <span className="font-semibold text-blue-500 text-[18px] pb-2">
+//               {supplier?.supplierId || "—"}
+//             </span>
+//             <span className="font-semibold text-[18px] pb-2">
+//               {supplier?.contactPerson || "—"}
+//             </span>
+//             <span className="font-semibold text-[18px] pb-2">
+//               {supplier?.contactPhone || supplier?.phone || "—"}
+//             </span>
+//             <span className="font-semibold text-[18px] pb-2">
+//               {supplier?.contactEmail || "—"}
+//             </span>
+//             <span className="font-semibold text-[18px] pb-2">
+//               {supplier?.email || "—"}
+//             </span>
+//             <span className="font-semibold text-[18px] pb-2">
+//               {transactionNumber}
+//             </span>
+//           </div>
+//         </div>
+
+//         <div>
+//           <table className="min-w-full divide-gray-200">
+//             <thead className="bg-gray-200 rounded-2xl border border-gray-200 shadow-sm">
+//               <tr>
+//                 <th className="px-2 py-4 text-md font-medium text-nowrap">
+//                   S/N
+//                 </th>
+//                 <th className="px-2 py-4 text-md font-medium text-nowrap">
+//                   Product Family
+//                 </th>
+//                 <th className="px-2 py-4 text-md font-medium text-nowrap">
+//                   Product Category
+//                 </th>
+//                 <th className="px-2 py-4 text-md font-medium text-nowrap">
+//                   Product Name
+//                 </th>
+//                 <th className="px-2 py-4 text-md font-medium text-nowrap">
+//                   QTY
+//                 </th>
+//                 <th className="px-2 py-4 text-md font-medium text-nowrap">
+//                   Rate
+//                 </th>
+//                 <th className="px-2 py-4 text-md font-medium text-nowrap">
+//                   Unit Total
+//                 </th>
+//               </tr>
+//             </thead>
+//             <tbody className="bg-white divide-y divide-gray-300">
+//               {items.map((item, index) => (
+//                 <tr key={index}>
+//                   <th className="px-6 py-4 text-sm font-medium text-gray-700">
+//                     {String(index + 1).padStart(2, "0")}
+//                   </th>
+//                   <th className="px-6 py-4 text-sm font-medium text-gray-700">
+//                     {item.productFamily}
+//                   </th>
+//                   <th className="px-6 py-4 text-sm font-medium text-gray-700">
+//                     {item.productCategory}
+//                   </th>
+//                   <th className="px-6 py-4 text-sm font-medium text-gray-700">
+//                     {item.itemName}
+//                   </th>
+//                   <th className="px-6 py-4 text-sm font-medium text-gray-700">
+//                     {item.qty}
+//                   </th>
+//                   <th className="px-6 py-4 text-sm font-medium text-gray-700">
+//                     {item.rate.toLocaleString()}
+//                   </th>
+//                   <th className="px-6 py-4 text-sm font-medium text-gray-700">
+//                     {item.total.toLocaleString()}
+//                   </th>
+//                 </tr>
+//               ))}
+//             </tbody>
+//           </table>
+//         </div>
+
+//         <div className="w-full border-b border-t border-gray-300 flex justify-end">
+//           <div className="flex flex-col text-right space-y-2 p-4">
+//             <div className="flex justify-between w-90">
+//               <span>Sub total</span>
+//               <span className="font-semibold">
+//                 #{subtotal.toLocaleString()}
+//               </span>
+//             </div>
+//             <div className="flex justify-between w-90">
+//               <span>Discount(%)</span>
+//               <span className="font-semibold">{discountPercent}%</span>
+//             </div>
+//             <div className="flex justify-between w-90">
+//               <span className="text-nowrap">Discount Amount</span>
+//               <span className="font-semibold">
+//                 #{discountAmount.toLocaleString()}
+//               </span>
+//             </div>
+//             <div className="flex justify-between w-90">
+//               <span className="font-semibold text-[25px] text-blue-500">
+//                 Total Amount
+//               </span>
+//               <span className="font-semibold text-[25px] text-blue-500">
+//                 #{grandTotal.toLocaleString()}
+//               </span>
+//             </div>
+//           </div>
+//         </div>
+
+//         <div className="flex justify-end gap-4 pt-6 print:hidden">
+//           <button
+//             onClick={handleSaveToDevice}
+//             className="border font-semibold px-4 py-2 text-blue-600 bg-white rounded-lg border-gray-300"
+//           >
+//             Save to device
+//           </button>
+//           <button
+//             onClick={handleSendToSupplier}
+//             className="py-2 px-4 bg-blue-600 font-semibold rounded-lg border-blue-600 text-white"
+//           >
+//             Send to supplier
+//           </button>
+//         </div>
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default GeneratePDF;
+
+import React, { useState, useEffect } from "react";
 import { ChevronRight } from "lucide-react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const GeneratePDF = () => {
-  const location = useLocation();
   const navigate = useNavigate();
-  const poData = location.state?.poData;
+  const [poData, setPoData] = useState(null);
+  const [loaded, setLoaded] = useState(false);
 
-  // If someone lands here directly (refresh, bookmark) with no PO data, bounce back
+  useEffect(() => {
+    const stored = sessionStorage.getItem("poData");
+    if (stored) {
+      try {
+        setPoData(JSON.parse(stored));
+      } catch {
+        setPoData(null);
+      }
+    }
+    setLoaded(true);
+  }, []);
+
+  if (!loaded) return null; // avoid a flash of the "not found" message while reading storage
+
   if (!poData) {
     return (
       <div className="p-6 text-center">
@@ -238,7 +481,6 @@ const GeneratePDF = () => {
   } = poData;
 
   const handleSaveToDevice = () => {
-    // Opens the browser print dialog — user can choose "Save as PDF" as the destination
     window.print();
   };
 
