@@ -8,7 +8,7 @@ const CreateInvoice = () => {
   const PRODUCTS_URL =
     "https://project-genesis-dashboard.onrender.com/api/products/";
   const INVOICE_URL =
-    "https://project-genesis-dashboard.onrender.com/api/invoices/";
+    "https://project-genesis-dashboard.onrender.com/api/invoice/";
 
   const [products, setProducts] = useState([]);
   const [loadingProducts, setLoadingProducts] = useState(true);
